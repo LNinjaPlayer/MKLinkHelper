@@ -115,6 +115,7 @@
             SelectOutputs_bt.TabIndex = 8;
             SelectOutputs_bt.Text = "Select Outputs";
             SelectOutputs_bt.UseVisualStyleBackColor = true;
+            SelectOutputs_bt.Click += SelectOutputs_bt_Click;
             // 
             // OutputFolders
             // 

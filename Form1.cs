@@ -97,7 +97,16 @@ namespace MKLinkHelper_WinForms
             }
         }
 
-        private void RunCMDandLog(List<string> list_of_commands_to_run, TextBox LogText)
+		private void SelectOutputs_bt_Click(object sender, EventArgs e)
+		{
+            DialogResult result = SelectFolders_fn.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                OutputFolders.Text = '"' + string.Join("\";\"", SelectFolders_fn.SelectedPaths) + '"';
+			}
+		}
+
+		private static void RunCMDandLog(List<string> list_of_commands_to_run, TextBox LogText)
         {
             // Build a single command string; use " & " to run each command sequentially regardless of previous exit codes.
             // Append "2>&1" so stderr is redirected into stdout and we only need to read one stream.
@@ -228,7 +237,7 @@ namespace MKLinkHelper_WinForms
 
         private void OutputLogToText_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            SaveFileDialog saveFileDialog = new()
             {
                 Title = "Save LOG to Text File",
                 Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
@@ -244,7 +253,7 @@ namespace MKLinkHelper_WinForms
                 {
                     MessageBox.Show("Error saving log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-			}
-		}
+            }
+        }
     }
 }
