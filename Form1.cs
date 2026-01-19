@@ -5,14 +5,22 @@ namespace MKLinkHelper_WinForms
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(string[] args)
         {
             InitializeComponent();
             LogText.ScrollBars = ScrollBars.Both;
             SelectFolders_fn.Multiselect = true;
             SelectFiles_fn.Multiselect = true;
-            // Enable drag and drop for IN_Folders TextBox
-            InputFolders.DragEnter += (s, e) =>
+
+			// Check for files/folders drapped onto exe
+			if (args.Length > 0)
+            {
+				InputFolders.Text = '"' + string.Join("\";\"", args.Where(Directory.Exists)) + '"';
+                InputFiles.Text = '"' + string.Join("\";\"", args.Where(File.Exists)) + '"';
+			}
+
+			// Enable drag and drop for IN_Folders TextBox
+			InputFolders.DragEnter += (s, e) =>
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
